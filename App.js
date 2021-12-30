@@ -8,31 +8,11 @@ export default function App() {
 
   const[loading, setLoading] = useState(false);
   const[job, setJob] = useState();
+  const[param, setParam] = useState();
 
   const loadJob = async() => {
 
-    const res = await fetch('http://jobswipe.tk/?query=SELECT * FROM `Job` WHERE `JobID` = 1', {
-
-      method: 'POST',
-      headers:{
-
-        Accept: 'application/json',
-        'Content-Type': 'application/json'
-      
-
-      },
-
-      body: JSON.stringify({
-
-        query: 'SELECT * FROM `Job` WHERE `JobID` = 1'
-
-      })
-
-
-      }
-    
-    
-  );
+    const res = await fetch('http://jobswipe.tk/?query=SELECT * FROM `Job` WHERE `JobID` = 1');
 
   const data = await res.json();
   setJob(data);
@@ -48,18 +28,19 @@ export default function App() {
 
   if (!job) return (
 
-    <View>
+    <View style = {styles.container}>
       <Text style={styles.paragraph}>No job?</Text>
     </View>
 
   )
   return (
+    <View style={styles.container}>
     <SafeAreaView>
-      <ScrollView
-      refreshControl={<RefreshControl refreshing={loading} onRefresh={loadJob}/>}>
+      <ScrollView refreshControl={<RefreshControl refreshing={loading} onRefresh={loadJob}/>}>
         <Text>{job.Name} - {job.Description}</Text>
       </ScrollView>
     </SafeAreaView>
+    </View>
   );
 }
 
