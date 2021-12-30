@@ -24,7 +24,7 @@ export default function App() {
 
       body: JSON.stringify({
 
-        query: 'SELECT * FROM `Job` WHERE `JobID` = 1 '
+        query: 'SELECT * FROM `Job` WHERE `JobID` = 1'
 
       })
 
@@ -57,7 +57,7 @@ export default function App() {
     <SafeAreaView>
       <ScrollView
       refreshControl={<RefreshControl refreshing={loading} onRefresh={loadJob}/>}>
-        <Text style = {styles.paragraph}>{job.name} - {job.description}</Text>
+        <Text>{job.Name} - {job.Description}</Text>
       </ScrollView>
     </SafeAreaView>
   );
