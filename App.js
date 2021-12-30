@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { Image, Text, SafeAreaView, ScrollView, View, StyleSheet, ActivityIndicator
+import { Image, Text, SafeAreaView, ScrollView, View, StyleSheet, ActivityIndicator, Button
   , RefreshControl } from 'react-native';
   import Constants from 'expo-constants';
 
@@ -12,11 +12,28 @@ export default function App() {
 
   const loadJob = async() => {
 
-    const res = await fetch('http://jobswipe.tk/?query=SELECT * FROM `Job` WHERE `JobID` = 1');
 
-  const data = await res.json();
-  setJob(data);
-  setLoading(false);
+    if(!param || !job){
+
+      const res = await fetch('http://jobswipe.tk/?query=SELECT * FROM `Job` WHERE `JobID` = 69');
+
+      const data = await res.json();
+      setJob(data);
+      setLoading(false);
+
+    }
+    else{
+
+      const res = await fetch('http://jobswipe.tk/?query=SELECT * FROM `Job` WHERE ' + param);
+
+      const data = await res.json();
+      setJob(data);
+      setLoading(false);
+
+
+    }
+
+
 
 }
   
@@ -38,6 +55,24 @@ export default function App() {
     <SafeAreaView>
       <ScrollView refreshControl={<RefreshControl refreshing={loading} onRefresh={loadJob}/>}>
         <Text>{job.Name} - {job.Description}</Text>
+        <Button 
+        title = "search for jobID = 1"
+        onPress={()=>{
+
+          setParam("`JobID` = 1");
+          loadJob();
+
+        }}
+        />
+        <Button 
+        title = "search for jobID = 2"
+        onPress={()=>{
+
+          setParam("`JobID` = 2");
+          loadJob();
+
+        }}
+        />
       </ScrollView>
     </SafeAreaView>
     </View>
