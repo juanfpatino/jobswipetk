@@ -17,7 +17,13 @@ export default function App() {
 
 
 
+<<<<<<< HEAD
       if(param){
+=======
+        query: 'SELECT * FROM `Job` WHERE `JobID` = 1 '
+
+      })
+>>>>>>> parent of e1f7162 (Update App.js)
 
         res = await fetch(`http://jobswipe.tk/?query=SELECT * FROM Job WHERE ${param}`);
 
@@ -41,6 +47,7 @@ export default function App() {
 
   return (
     <SafeAreaView>
+<<<<<<< HEAD
       <ScrollView>
         <Button 
         title = "search for jobID = 1"
@@ -59,6 +66,11 @@ export default function App() {
         }}
         />
         <Text style>{job.Name} - {job.Description}</Text>
+=======
+      <ScrollView
+      refreshControl={<RefreshControl refreshing={loading} onRefresh={loadJob}/>}>
+        <Text style = {styles.paragraph}>{job.name} - {job.description}</Text>
+>>>>>>> parent of e1f7162 (Update App.js)
       </ScrollView>
     </SafeAreaView>
   );
