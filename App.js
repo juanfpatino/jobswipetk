@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react';
-import { Image, TextInput, Text, SafeAreaView, ScrollView, View, StyleSheet, ActivityIndicator, Button
+import { StatusBar } from 'expo-status-bar';
+import { Image, Text, SafeAreaView, ScrollView, View, StyleSheet, ActivityIndicator
   , RefreshControl } from 'react-native';
   import Constants from 'expo-constants';
 
@@ -7,29 +8,31 @@ export default function App() {
 
   const[loading, setLoading] = useState(false);
   const[job, setJob] = useState();
-  const[param, setParam] = useState();
 
   const loadJob = async() => {
 
+    const res = await fetch('http://jobswipe.tk/?query=SELECT * FROM `Job` WHERE `JobID` = 1', {
 
+      method: 'POST',
+      headers:{
 
-      const res = await fetch(`http://jobswipe.tk/?query=SELECT * FROM 'Job' WHERE JobID = 69`);
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      
 
+      },
 
+      body: JSON.stringify({
 
-<<<<<<< HEAD
-      if(param){
-=======
-        query: 'SELECT * FROM `Job` WHERE `JobID` = 1 '
+        query: 'SELECT * FROM `Job` WHERE `JobID` = 1'
 
       })
->>>>>>> parent of e1f7162 (Update App.js)
 
-        res = await fetch(`http://jobswipe.tk/?query=SELECT * FROM Job WHERE ${param}`);
 
       }
-
     
+    
+  );
 
   const data = await res.json();
   setJob(data);
@@ -43,34 +46,18 @@ export default function App() {
 
   },[]);
 
-  //if (!job) return;
+  if (!job) return (
 
+    <View>
+      <Text style={styles.paragraph}>No job?</Text>
+    </View>
+
+  )
   return (
     <SafeAreaView>
-<<<<<<< HEAD
-      <ScrollView>
-        <Button 
-        title = "search for jobID = 1"
-        onPress={()=>{
-
-          setParam("JobID = 1");
-
-        }}
-        />
-        <Button 
-        title = "search for jobID = 2"
-        onPress={()=>{
-
-          setParam("JobID = 2");
-
-        }}
-        />
-        <Text style>{job.Name} - {job.Description}</Text>
-=======
       <ScrollView
       refreshControl={<RefreshControl refreshing={loading} onRefresh={loadJob}/>}>
-        <Text style = {styles.paragraph}>{job.name} - {job.description}</Text>
->>>>>>> parent of e1f7162 (Update App.js)
+        <Text>{job.Name} - {job.Description}</Text>
       </ScrollView>
     </SafeAreaView>
   );
