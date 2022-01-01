@@ -3,6 +3,8 @@ import { StatusBar } from 'expo-status-bar';
 import { Image, Text, SafeAreaView, ScrollView, View, StyleSheet, ActivityIndicator, Button
   , RefreshControl } from 'react-native';
   import Constants from 'expo-constants';
+import {NavigationContainer} from "@react-navigation/native";
+
 
 export default function App() {
 
@@ -46,7 +48,7 @@ export default function App() {
   if (!job) return (
 
     <View style = {styles.container}>
-      <Text style={styles.paragraph}>No job?</Text>
+      <Text style={styles.paragraph}>No Results</Text>
     </View>
 
   )
@@ -74,6 +76,9 @@ export default function App() {
         }}
         />
       </ScrollView>
+      <Button
+      title = "Set job preferences">
+      </Button>
     </SafeAreaView>
     </View>
   );
