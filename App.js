@@ -4,104 +4,27 @@ import { Image, Text, SafeAreaView, ScrollView, View, StyleSheet, ActivityIndica
   , RefreshControl } from 'react-native';
   import Constants from 'expo-constants';
 import {NavigationContainer} from "@react-navigation/native";
+import {createStackNavigator} from "@react-navigation/stack";
+import test from './components/test';
 
+
+const {Navigator, Screen} = createStackNavigator();
 
 export default function App() {
 
-  const[loading, setLoading] = useState(false);
-  const[job, setJob] = useState();
-  const[param, setParam] = useState();
-
-  const loadJob = async() => {
-
-
-    if(!param || !job){
-
-      const res = await fetch('http://jobswipe.tk/?query=SELECT * FROM `Job` WHERE `JobID` = 69');
-
-      const data = await res.json();
-      setJob(data);
-      setLoading(false);
-
-    }
-    else{
-
-      const res = await fetch('http://jobswipe.tk/?query=SELECT * FROM `Job` WHERE ' + param);
-
-      const data = await res.json();
-      setJob(data);
-      setLoading(false);
-
-
-    }
-
-
-
-}
-  
-  useEffect(() =>{
-
-    loadJob();
-
-  },[]);
-
-  if (!job) return (
-
-    <View style = {styles.container}>
-      <Text style={styles.paragraph}>No Results</Text>
-    </View>
-
-  )
-  return (
-    <View style={styles.container}>
-    <SafeAreaView>
-      <ScrollView refreshControl={<RefreshControl refreshing={loading} onRefresh={loadJob}/>}>
-        <Text>{job.Name} - {job.Description}</Text>
-        <Button 
-        title = "search for jobID = 1"
-        onPress={()=>{
-
-          setParam("`JobID` = 1");
-          loadJob();
-
-        }}
+  return(
+    <NavigationContainer>
+      <Navigator>
+        <Screen 
+        name = "test"
+        options = {{title: "Test screen"}}
+        component={test}
         />
-        <Button 
-        title = "search for jobID = 2"
-        onPress={()=>{
+      </Navigator>
+    </NavigationContainer>
 
-          setParam("`JobID` = 2");
-          loadJob();
 
-        }}
-        />
-      </ScrollView>
-      <Button
-      title = "Set job preferences">
-      </Button>
-    </SafeAreaView>
-    </View>
+
   );
+
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    paddingTop: Constants.statusBarHeight,
-    backgroundColor: '#ecf0f1',
-    padding: 8,
-  },
-  paragraph: {
-    margin: 24,
-    fontSize: 18,
-    fontWeight: 'bold',
-    textAlign: 'center',
-  },
-  pic:{
-
-    height: 500,
-    width: 500
-
-  }
-});
