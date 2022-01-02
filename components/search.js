@@ -6,19 +6,23 @@ import { Image, Text, SafeAreaView, ScrollView, View, StyleSheet, ActivityIndica
 
   //TODO: this will be where the "tinder" cards are
 
-export default function search({ navigation }) {
+export default function search({ route, navigation}) {
 
   const[loading, setLoading] = useState(false);
   const[job, setJob] = useState();
-  const[titleContains, setTitleContains] = useState();
-  const[jobtype, setJobType] = useState();
+  const{JOBTYPE} = route.params;
+  const{TITLECONTAINS} = route.params;
+  var jobtypeStripped = "'" + JSON.stringify(JOBTYPE).replace(/["]+/g, '') + "'";
+  var titleContainsStripped = JSON.stringify(TITLECONTAINS).replace(/["]+/g, '');
+
+  //const[TITLECONTAINS, setTITLECONTAINS] = useState();
+  //const[JOBTYPE, setJOBTYPE] = useState();
 
   const loadJob = async() => {
 
-
     if(
         //(
-        !titleContains && !jobtype) 
+            jobtypeStripped == "''" && titleContainsStripped  == "") 
     //|| !job)
     {
 
@@ -29,9 +33,10 @@ export default function search({ navigation }) {
       setLoading(false);
 
     }
-    else if(!titleContains){
+    else if(titleContainsStripped == ""){
 
-      const res = await fetch('http://jobswipe.tk/?query=SELECT * FROM `Job` WHERE `Type` = `' + jobtype + '`');
+      console.log('http://jobswipe.tk/?query=SELECT * FROM `Job` WHERE `Type` = ' + jobtypeStripped);
+      const res = await fetch('http://jobswipe.tk/?query=SELECT * FROM `Job` WHERE `Type` = ' + jobtypeStripped);
 
       const data = await res.json();
       setJob(data);
@@ -39,9 +44,10 @@ export default function search({ navigation }) {
 
 
     }
-    else if(!jobtype){
+    else if(jobtypeStripped == "''"){
 
-        const res = await fetch('http://jobswipe.tk/?query=SELECT * FROM `Job` WHERE `Name` LIKE `%' + titleContains + '%`');
+        console.log('http://jobswipe.tk/?query=SELECT * FROM `Job` WHERE `Name` LIKE' + "'%" + titleContainsStripped + "%'" );
+        const res = await fetch('http://jobswipe.tk/?query=SELECT * FROM `Job` WHERE `Name` LIKE' + "'%" + titleContainsStripped + "%'" );
 
         const data = await res.json();
         setJob(data);
@@ -50,8 +56,8 @@ export default function search({ navigation }) {
     }
     else{
 
-        const res = await fetch('http://jobswipe.tk/?query=SELECT * FROM `Job` WHERE `Name` LIKE `%' + titleContains + '%` AND `Type` = `' + jobtype + '`');
-
+        console.log('http://jobswipe.tk/?query=SELECT * FROM `Job` WHERE `Name` LIKE ' + "'%" + titleContainsStripped + "%'" + ' AND `Type` = ' + jobtypeStripped);
+        const res = await fetch('http://jobswipe.tk/?query=SELECT * FROM `Job` WHERE `Name` LIKE ' + "'%" + titleContainsStripped + "%'" + ' AND `Type` = ' + jobtypeStripped);
         const data = await res.json();
         setJob(data);
         setLoading(false); 
@@ -77,6 +83,8 @@ export default function search({ navigation }) {
       title = "Back"
       onPress={()=> navigation.navigate("preferences")}>
       </Button>
+      <Text>{JSON.stringify(JOBTYPE).replace(/["]+/g, '')} - {JSON.stringify(TITLECONTAINS).replace(/["]+/g, '')}</Text>
+
     </View>
 
   )
@@ -85,6 +93,7 @@ export default function search({ navigation }) {
     <SafeAreaView>
       <ScrollView refreshControl={<RefreshControl refreshing={loading} onRefresh={loadJob}/>}>
         <Text>{job.Name} - {job.Description}</Text>
+        <Text>{JSON.stringify(JOBTYPE)} - {JSON.stringify(TITLECONTAINS)}</Text>
       </ScrollView>
       <Button
       title = "Set job preferences"

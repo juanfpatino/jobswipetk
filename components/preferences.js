@@ -9,13 +9,13 @@ export default function preferences({ navigation }) {
 
     const [open, setOpen] = useState(false);
     const [value, setValue] = useState(null);
-    const [jobtype, setJobType] = useState([
-      {label: 'Part-Time', value: 'part'},
-      {label: 'Full-Time', value: 'full'},
-      {label: 'Intern/Co-op', value: 'intern'}
+    const [item, setItem] = useState([
+      {label: 'Part-Time', value: 'Part-Time'},
+      {label: 'Full-Time', value: 'Full-Time'},
+      {label: 'Intern/Co-op', value: 'intern'}//not in database yet
     ]);
 
-
+    const[jobtype, setJobType] = useState();
     const[titleContains, setTitleContains] = useState("");
     const input = useRef();
 
@@ -35,12 +35,14 @@ export default function preferences({ navigation }) {
       }}
       open={open}
       value={value}
-      items={jobtype}
+      items={item}
       setOpen={setOpen}
       setValue={setValue}
-      setItems={setJobType}
-      onSelectItem={(jobtype) => {
-        console.log(jobtype);
+      setItems={setItem}
+      onSelectItem={(value) => {
+        console.log(value.value);
+        setJobType(value.value);
+
       }}
     />
         <TextInput
@@ -48,17 +50,17 @@ export default function preferences({ navigation }) {
         style = {styles.txtInput}
         value={titleContains}
         onChangeText={setTitleContains}
-        autoCapitalize='none'
+        autoCapitalize='sentences'
         placeholder='What job? (i.e. title)'    
     />
     
     <Button
     title="set"
     onPress={()=>{
-
         input.current.blur();
         setTitleContains("");
-        navigation.navigate("search");
+        navigation.navigate("search", 
+        {JOBTYPE: jobtype, TITLECONTAINS: titleContains});
     }}
     />
         </SafeAreaView>
