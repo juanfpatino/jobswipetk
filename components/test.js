@@ -3,10 +3,9 @@ import { StatusBar } from 'expo-status-bar';
 import { Image, Text, SafeAreaView, ScrollView, View, StyleSheet, ActivityIndicator, Button
   , RefreshControl } from 'react-native';
   import Constants from 'expo-constants';
-import {NavigationContainer} from "@react-navigation/native";
 
 
-export default function test() {
+export default function test({ navigation }) {
 
   const[loading, setLoading] = useState(false);
   const[job, setJob] = useState();
@@ -77,7 +76,8 @@ export default function test() {
         />
       </ScrollView>
       <Button
-      title = "Set job preferences">
+      title = "Set job preferences"
+      onPress={()=> navigation.navigate("preferences")}>
       </Button>
     </SafeAreaView>
     </View>
