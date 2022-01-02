@@ -74,6 +74,16 @@ export default function test({ navigation }) {
 
         }}
         />
+        <Button 
+        title = "search for Employer = crossroads"
+        onPress={()=>{  //TODO: this returns multiple json objects
+                        //make it so that it returns one / can handle multiple
+
+          setParam("`Employer` = `Crossroads`");
+          loadJob();
+
+        }}
+        />
       </ScrollView>
       <Button
       title = "Set job preferences"
