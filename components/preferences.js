@@ -39,6 +39,9 @@ export default function preferences({ navigation }) {
       setOpen={setOpen}
       setValue={setValue}
       setItems={setJobType}
+      onSelectItem={(jobtype) => {
+        console.log(jobtype);
+      }}
     />
 
         <TextInput
