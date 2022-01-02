@@ -15,14 +15,11 @@ export default function search({ route, navigation}) {
   var jobtypeStripped = "'" + JSON.stringify(JOBTYPE).replace(/["]+/g, '') + "'";
   var titleContainsStripped = JSON.stringify(TITLECONTAINS).replace(/["]+/g, '');
 
-  //const[TITLECONTAINS, setTITLECONTAINS] = useState();
-  //const[JOBTYPE, setJOBTYPE] = useState();
-
   const loadJob = async() => {
 
     if(
         //(
-            jobtypeStripped == "''" && titleContainsStripped  == "") 
+            (jobtypeStripped == "''" || jobtypeStripped=="'any'") && titleContainsStripped  == "") 
     //|| !job)
     {
 
@@ -44,7 +41,7 @@ export default function search({ route, navigation}) {
 
 
     }
-    else if(jobtypeStripped == "''"){
+    else if(jobtypeStripped == "''" || jobtypeStripped=="'any'"){
 
         console.log('http://jobswipe.tk/?query=SELECT * FROM `Job` WHERE `Name` LIKE' + "'%" + titleContainsStripped + "%'" );
         const res = await fetch('http://jobswipe.tk/?query=SELECT * FROM `Job` WHERE `Name` LIKE' + "'%" + titleContainsStripped + "%'" );
@@ -55,6 +52,7 @@ export default function search({ route, navigation}) {
 
     }
     else{
+
 
         console.log('http://jobswipe.tk/?query=SELECT * FROM `Job` WHERE `Name` LIKE ' + "'%" + titleContainsStripped + "%'" + ' AND `Type` = ' + jobtypeStripped);
         const res = await fetch('http://jobswipe.tk/?query=SELECT * FROM `Job` WHERE `Name` LIKE ' + "'%" + titleContainsStripped + "%'" + ' AND `Type` = ' + jobtypeStripped);

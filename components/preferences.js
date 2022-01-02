@@ -12,7 +12,8 @@ export default function preferences({ navigation }) {
     const [item, setItem] = useState([
       {label: 'Part-Time', value: 'Part-Time'},
       {label: 'Full-Time', value: 'Full-Time'},
-      {label: 'Intern/Co-op', value: 'intern'}//not in database yet
+      {label: 'Intern/Co-op', value: 'intern'},//not in database yet
+      {label: 'Any', value: 'any'}
     ]);
 
     const[jobtype, setJobType] = useState();

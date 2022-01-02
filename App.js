@@ -12,11 +12,7 @@ export default function App() {
   return(
     <NavigationContainer>
       <Navigator>
-        <Screen 
-        name = "test"
-        options = {{title: "Test screen"}}
-        component={test}
-        />
+
         <Screen
         name = "preferences"
         options={{title: "Set job search"}}
@@ -26,6 +22,11 @@ export default function App() {
         name = "search"
         options={{title: "Results"}}
         component={search}
+        />
+        <Screen 
+        name = "test"
+        options = {{title: "Test screen"}}
+        component={test}
         />
       </Navigator>
     </NavigationContainer>
