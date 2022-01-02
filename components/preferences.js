@@ -43,7 +43,6 @@ export default function preferences({ navigation }) {
         console.log(jobtype);
       }}
     />
-
         <TextInput
         ref={input}
         style = {styles.txtInput}
@@ -59,7 +58,7 @@ export default function preferences({ navigation }) {
 
         input.current.blur();
         setTitleContains("");
-        navigation.navigate("test");
+        navigation.navigate("search");
     }}
     />
         </SafeAreaView>

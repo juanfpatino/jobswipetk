@@ -3,6 +3,7 @@ import {NavigationContainer} from "@react-navigation/native";
 import {createStackNavigator} from "@react-navigation/stack";
 import test from './components/test';
 import preferences from './components/preferences';
+import search from './components/search';
 
 const {Navigator, Screen} = createStackNavigator();
 
@@ -20,6 +21,11 @@ export default function App() {
         name = "preferences"
         options={{title: "Set job search"}}
         component={preferences}
+        />
+        <Screen
+        name = "search"
+        options={{title: "Results"}}
+        component={search}
         />
       </Navigator>
     </NavigationContainer>
