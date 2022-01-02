@@ -17,54 +17,36 @@ export default function search({ route, navigation}) {
 
   const loadJob = async() => {
 
-    if(
-        //(
-            (jobtypeStripped == "''" || jobtypeStripped=="'any'") && titleContainsStripped  == "") 
-    //|| !job)
-    {
 
-      const res = await fetch('http://jobswipe.tk/?query=SELECT * FROM `Job` WHERE `JobID` = 69');
+    var query;
 
-      const data = await res.json();
-      setJob(data);
-      setLoading(false);
 
+    if((jobtypeStripped == "''" || jobtypeStripped=="'any'") && titleContainsStripped  == "") {
+
+        query = 'http://jobswipe.tk/?query=SELECT * FROM `Job` WHERE `JobID` = 69';
     }
     else if(titleContainsStripped == ""){
 
-      console.log('http://jobswipe.tk/?query=SELECT * FROM `Job` WHERE `Type` = ' + jobtypeStripped);
-      const res = await fetch('http://jobswipe.tk/?query=SELECT * FROM `Job` WHERE `Type` = ' + jobtypeStripped);
-
-      const data = await res.json();
-      setJob(data);
-      setLoading(false);
-
+        query = 'http://jobswipe.tk/?query=SELECT * FROM `Job` WHERE `Type` = ' + jobtypeStripped;
 
     }
     else if(jobtypeStripped == "''" || jobtypeStripped=="'any'"){
 
-        console.log('http://jobswipe.tk/?query=SELECT * FROM `Job` WHERE `Name` LIKE' + "'%" + titleContainsStripped + "%'" );
-        const res = await fetch('http://jobswipe.tk/?query=SELECT * FROM `Job` WHERE `Name` LIKE' + "'%" + titleContainsStripped + "%'" );
-
-        const data = await res.json();
-        setJob(data);
-        setLoading(false);    
+        query = 'http://jobswipe.tk/?query=SELECT * FROM `Job` WHERE `Name` LIKE' + "'%" + titleContainsStripped + "%'";
 
     }
     else{
 
-
-        console.log('http://jobswipe.tk/?query=SELECT * FROM `Job` WHERE `Name` LIKE ' + "'%" + titleContainsStripped + "%'" + ' AND `Type` = ' + jobtypeStripped);
-        const res = await fetch('http://jobswipe.tk/?query=SELECT * FROM `Job` WHERE `Name` LIKE ' + "'%" + titleContainsStripped + "%'" + ' AND `Type` = ' + jobtypeStripped);
-        const data = await res.json();
-        setJob(data);
-        setLoading(false); 
-
+        query = 'http://jobswipe.tk/?query=SELECT * FROM `Job` WHERE `Name` LIKE ' + "'%" + titleContainsStripped + "%'" + ' AND `Type` = ' + jobtypeStripped;
 
     }
 
-
-
+    console.log(query);
+    const res = await fetch(query);
+    const data = await res.json();
+    setJob(data);
+    setLoading(false); 
+     
 }
   
   useEffect(() =>{
